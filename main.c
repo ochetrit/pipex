@@ -82,5 +82,10 @@ int	main(int ac, char **av, char **envp)
 		if (!pipex(lst, envp))
 			return (0);
 	}
+	else
+	{
+		if (!pipex_bonus(lst, envp))
+			return (0);
+	}
 	return (0);
 }

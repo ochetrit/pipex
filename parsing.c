@@ -47,6 +47,8 @@ int	parsing(t_args *lst, char **envp)
 	j = 0;
 	while (j < lst->nb_cmd)
 	{
+		if (!lst->cmd[j][0])
+			return (free_lst(lst), ft_printf(ERROR_CMD), FALSE);
 		lst->path_cmd[j] = check_access(lst->cmd[j][0], envp[i],
 				&lst->free_cmd_path[j]);
 		if (!lst->path_cmd[j])

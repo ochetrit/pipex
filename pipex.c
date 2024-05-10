@@ -27,9 +27,11 @@ int	pipex(t_args *lst, char **envp)
 	}
 	else
 	{
-		wait(NULL);
+		//waitpid(fd_fork);
 		if (!exec_cmd2(lst, envp))
 			return (FALSE);
+		while (wait(NULL) > 0)
+			continue ;
 	}
 	return (FALSE);
 }
@@ -48,7 +50,7 @@ void	exec_cmd1(t_args *lst, char **envp)
 		free_lst(lst);
 		exit(EXIT_FAILURE);
 	}
-	free_pipe(lst);
+	free_pipe(lst, lst->pipe_fd);
 	if (execve(lst->path_cmd[0], lst->cmd[0], envp) == -1)
 	{
 		perror("Error execve\n");
@@ -73,7 +75,7 @@ int	exec_cmd2(t_args *lst, char **envp)
 			free_lst(lst);
 			exit(EXIT_FAILURE);
 		}
-		free_pipe(lst);
+		free_pipe(lst, lst->pipe_fd);
 		if (execve(lst->path_cmd[1], lst->cmd[1], envp) == -1)
 		{
 			perror("Error execve\n");
@@ -81,7 +83,7 @@ int	exec_cmd2(t_args *lst, char **envp)
 			exit(EXIT_FAILURE);
 		}
 	}
-	free_pipe(lst);
+	free_pipe(lst, lst->pipe_fd);
 	free_lst(lst);
 	return (TRUE);
 }

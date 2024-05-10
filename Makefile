@@ -1,4 +1,4 @@
-SRCS = main.c parsing.c utils.c pipex.c
+SRCS = main.c parsing.c utils.c pipex.c pipex_bonus.c
 
 OBJS = $(SRCS:.c=.o) ./libft/libft.a
 

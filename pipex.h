@@ -60,6 +60,7 @@ int			open_files(t_args *lst);
 int			pipex(t_args *lst, char **envp);
 void		exec_cmd1(t_args *lst, char **envp);
 int			exec_cmd2(t_args *lst, char **envp);
+int			pipex_bonus(t_args *lst, char **envp);
 # ifndef ERROR_PIPE
 #  define ERROR_PIPE "Some mistakes occures when using pipe\n"
 # endif
@@ -69,11 +70,14 @@ int			exec_cmd2(t_args *lst, char **envp);
 # ifndef ERROR_DUP
 #  define ERROR_DUP "Some mistakes occures when using dup\n"
 # endif
+# ifndef ERROR_EXEC
+#  define ERROR_EXEC "Some mistakes occures when using execve\n"
+# endif
 ///     FIN DE PIPEX   ///
 
 ///    FONCTION UTILS   ///
 void		free_tab(char **tab);
-void		free_pipe(t_args *lst);
+void		free_pipe(t_args *lst, int pipe_fd[2]);
 void		free_lst(t_args *lst);
 void		free_path_cmd(t_args *lst);
 t_args		*ft_initialise_lst(int ac, char **av, t_args *lst);

@@ -40,10 +40,12 @@ void	free_path_cmd(t_args *lst)
 	free(lst->free_cmd_path);
 }
 
-void	free_pipe(t_args *lst)
+void	free_pipe(t_args *lst, int pipe_fd[2])
 {
-	close(lst->pipe_fd[0]);
-	close(lst->pipe_fd[1]);
+	close(pipe_fd[0]);
+	close(pipe_fd[1]);
+	close(lst->fd1);
+	close(lst->fd2);
 }
 
 void	free_lst(t_args *lst)

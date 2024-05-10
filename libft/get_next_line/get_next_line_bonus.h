@@ -28,7 +28,7 @@ char	*free_temp(char *temp);
 char	*get_next_line(int fd);
 char	*ft_initialise(char *temp, int fd);
 char	*ft_replace_temp(char *temp, int i);
-char	*ft_extend_temp(char *temp, char stock[BUFFER_SIZE], int n_oct);
+char	*ft_extend_temp(char *temp, char *stock, int n_oct);
 char	*ft_strdup2(char *src, int n);
 int		ft_strlen2(const char *str);
 int		ft_strchr2(const char *str, int character);
