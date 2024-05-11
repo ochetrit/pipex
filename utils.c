@@ -44,7 +44,8 @@ void	free_pipe(t_args *lst, int pipe_fd[2])
 {
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
-	close(lst->fd1);
+	if (!lst->is_heredoc)
+		close(lst->fd1);
 	close(lst->fd2);
 }
 

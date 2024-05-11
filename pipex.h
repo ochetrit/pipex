@@ -33,7 +33,7 @@ typedef struct s_args
 	int		fd2;
 	int		close_fd;
 	int		*free_cmd_path;
-	int		pipe_fd[2];
+	int		is_heredoc;
 }			t_args;
 
 /// PARSING DE MON PIPEX ///
@@ -46,7 +46,7 @@ int			open_files(t_args *lst);
 #  define ERROR_MALLOC "One malloc has failed...\n"
 # endif
 # ifndef ERROR_NB_ARG
-#  define ERROR_NB_ARG "I need 4 arguments\n"
+#  define ERROR_NB_ARG "Not enough arguments\n"
 # endif
 # ifndef ERROR_CMD
 #  define ERROR_CMD "This command doesn't work\n"
@@ -58,9 +58,7 @@ int			open_files(t_args *lst);
 
 ///        PIPEX       ///
 int			pipex(t_args *lst, char **envp);
-void		exec_cmd1(t_args *lst, char **envp);
-int			exec_cmd2(t_args *lst, char **envp);
-int			pipex_bonus(t_args *lst, char **envp);
+int    heredoc(t_args *lst);
 # ifndef ERROR_PIPE
 #  define ERROR_PIPE "Some mistakes occures when using pipe\n"
 # endif

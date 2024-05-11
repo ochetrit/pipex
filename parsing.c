@@ -45,6 +45,8 @@ int	parsing(t_args *lst, char **envp)
 	while (envp[i] && !ft_strnstr(envp[i], "PATH=", 5))
 		i++;
 	j = 0;
+	if (lst->is_heredoc)
+		j++;
 	while (j < lst->nb_cmd)
 	{
 		if (!lst->cmd[j][0])
@@ -100,9 +102,12 @@ char	*get_access(char **all_path, char *cmd, char *str)
 
 int	open_files(t_args *lst)
 {
-	lst->fd1 = open(lst->file1, O_RDONLY);
-	if (lst->fd1 < 0)
-		return (ft_printf(ERROR_OPEN), FALSE);
+	if (!lst->is_heredoc)
+	{
+		lst->fd1 = open(lst->file1, O_RDONLY);
+		if (lst->fd1 < 0)
+			return (ft_printf(ERROR_OPEN), FALSE);
+	}
 	lst->fd2 = open(lst->file2, O_CREAT | O_WRONLY | O_TRUNC | O_APPEND, 0644);
 	if (lst->fd2 < 0)
 		return (close(lst->fd1), ft_printf(ERROR_OPEN), FALSE);

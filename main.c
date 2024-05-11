@@ -35,6 +35,9 @@ int	ft_initialise_cmd(t_args *lst, char **av)
 	i = -1;
 	while (++i < lst->nb_cmd)
 		lst->path_cmd[i] = NULL;
+	lst->is_heredoc = FALSE;
+	if (!ft_strncmp(lst->file1, "heredoc", 7))
+		lst->is_heredoc = TRUE;
 	return (TRUE);
 }
 
@@ -42,12 +45,12 @@ t_args	*ft_initialise_lst(int ac, char **av, t_args *lst)
 {
 	int	i;
 
-	if (ac < 5)
+	if (ac < 5 || (ac < 6 && !ft_strncmp("heredoc", av[1], 7)))
 		return (ft_printf(ERROR_NB_ARG), NULL);
 	lst = malloc(sizeof(t_args));
 	if (!lst)
-		return (ft_printf(ERROR_MALLOC), NULL);
-	lst->nb_cmd = 2;
+		return (ft_printf("no list\n"), NULL);
+	lst->nb_cmd = ac - 3;
 	lst->file1 = av[1];
 	lst->file2 = av[ac - 1];
 	lst->cmd = NULL;
@@ -77,15 +80,14 @@ int	main(int ac, char **av, char **envp)
 		return (0);
 	if (!parsing(lst, envp))
 		return (0);
-	if (lst->nb_cmd == 2)
-	{
-		if (!pipex(lst, envp))
-			return (0);
-	}
-	else
-	{
-		if (!pipex_bonus(lst, envp))
-			return (0);
-	}
+	//if (lst->nb_cmd == 2)
+	//{
+	//	if (!pipex(lst, envp))
+	//		return (0);
+	//}
+	if (lst->is_heredoc)
+		heredoc(lst);
+	if (!pipex(lst, envp))
+		return (0);
 	return (0);
 }
